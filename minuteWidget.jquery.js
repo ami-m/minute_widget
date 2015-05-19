@@ -1,6 +1,8 @@
 (function($, undefined){				
 			$.fn.minuteWidget = function( options ) {
 			
+			function nop() {}
+			
 			function posInt(n) {
 				n = parseInt(n, 10);
 				if(!(0 < n)) {
@@ -38,10 +40,33 @@
 				minutesInput.val(toMinutes(h, m));
 			}
 			
+			function getCurrentValues(minutesInput, minutesSlider, hoursSlider) {
+				var m = posInt(minutesSlider.val());
+				var h = posInt(hoursSlider.val());
+				var raw = toMinutes(h, m);
+				return {
+					raw: raw,
+					minutes: m,
+					hours: h
+				};
+			}
+			
+			function doOnChange(minutesInput, minutesSlider, hoursSlider) {
+				if("function" === typeof(settings.onChange)) {
+					settings.onChange(getCurrentValues(minutesInput, minutesSlider, hoursSlider));
+				}
+			}
+			
 			
 			var settings = $.extend({
+				"debug": false,
 				"hoursLabel": "hours",
 				"minutesLabel": "minutes",
+				"onChange": function (o) {
+					if(true === settings.debug) {
+						console.log(o);
+					}
+				}
 			}, options );
 
 			return this.each(function() {
@@ -77,14 +102,17 @@
 				minutesSlider.on("input", function() {
 					minutesVal.text(minutesSlider.val());
 					updateInputFromSliders(minutesInput, minutesSlider, hoursSlider);
+					doOnChange(minutesInput, minutesSlider, hoursSlider)
 				})
 				
 				hoursSlider.on("input", function() {
 					hoursVal.text(hoursSlider.val());
 					updateInputFromSliders(minutesInput, minutesSlider, hoursSlider);
+					doOnChange(minutesInput, minutesSlider, hoursSlider);
 				})
 				minutesInput.change(function() {
 					updateSlidersFromInput(minutesInput, minutesSlider, hoursSlider, minutesVal, hoursVal);
+					doOnChange(minutesInput, minutesSlider, hoursSlider);
 				})
 			});
 		}
