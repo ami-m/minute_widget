@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Minute widget demo</title>
+	<style>
+		#transform {cursor: pointer;}
+	</style>
+</head>
+<body>
+	<input id="test1" name="test1" /><br/><br/>
+	<input id="test2" name="test2" value="69"/><br/><br/>
+	<input id="test3" name="test3" value="119"/><br/><br/>
+	<div id="transform" >click here to transform the inputs</div>
+	
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="minuteWidget.jquery.js"></script>	
+	<script>
+		$("#transform").click(function() {
+			for(var i = 1; i <= 3; i++) {
+				$("#test" + i).minuteWidget();
+			}
+			$("#transform").hide();
+		});
+	</script>
+</body>
+</html>
