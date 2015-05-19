@@ -39,7 +39,10 @@
 			}
 			
 			
-			var settings = $.extend({}, options );
+			var settings = $.extend({
+				"hoursLabel": "hours",
+				"minutesLabel": "minutes",
+			}, options );
 
 			return this.each(function() {
 				var minutesInput = $(this);
@@ -47,11 +50,11 @@
 				var elName = minutesInput.prop("name");
 				
 				var minutesSlider = $('<input id="minutes_' + elName + '" type="range" min="0" max="59" value="0"/>');
-				var minutesLabel = $('<label class="control-label" for="minutes_' + elName + '">דקות</label>');
+				var minutesLabel = $('<label class="control-label" for="minutes_' + elName + '">' + settings.minutesLabel + '</label>');
 				var minutesVal = $('<span id="minutesVal_' + elName + '">0</span>');
 				
 				var hoursSlider = $('<input id="hours_' + elName + '" type="range" min="0" max="24" value="0"/>');
-				var hoursLabel = $('<label class="control-label" for="hours_' + elName + '">שעות</label>');
+				var hoursLabel = $('<label class="control-label" for="hours_' + elName + '">' + settings.hoursLabel + '</label>');
 				var hoursVal = $('<span id="hoursVal_' + elName + '">0</span>');
 				
 				

@@ -17,9 +17,13 @@
 	<script src="minuteWidget.jquery.js"></script>	
 	<script>
 		$("#transform").click(function() {
-			for(var i = 1; i <= 3; i++) {
+			for(var i = 1; i <= 2; i++) {
 				$("#test" + i).minuteWidget();
 			}
+			$("#test3").minuteWidget({
+				"hoursLabel": "horas",
+				"minutesLabel": "minutos",
+			});
 			$("#transform").hide();
 		});
 	</script>
