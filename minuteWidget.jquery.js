@@ -57,6 +57,41 @@
 				}
 			}
 			
+			function buildTheDOM(minutesInput, minutesVal, minutesSlider, minutesLabel, hoursVal, hoursSlider, hoursLabel) {
+				minutesInput.hide();
+				var widget = $("<div class='minuteSlidersWidget'></div>");
+				var minutesContainer = $("<div class='minutesContainer'></div>");
+				var hoursContainer = $("<div class='hoursContainer'></div>");
+				minutesContainer.append(minutesVal);
+				minutesContainer.append(minutesSlider);
+				minutesContainer.append(minutesLabel);
+				hoursContainer.append(hoursVal);
+				hoursContainer.append(hoursSlider);
+				hoursContainer.append(hoursLabel);
+				widget.append(minutesContainer);
+				widget.append(hoursContainer);
+				minutesInput.after(widget);
+				updateSlidersFromInput(minutesInput, minutesSlider, hoursSlider, minutesVal, hoursVal);
+			}
+			
+			function hookEvents(minutesInput, minutesVal, minutesSlider, minutesLabel, hoursVal, hoursSlider, hoursLabel) {
+				minutesSlider.on("input", function() {
+					minutesVal.text(minutesSlider.val());
+					updateInputFromSliders(minutesInput, minutesSlider, hoursSlider);
+					doOnChange(minutesInput, minutesSlider, hoursSlider)
+				})
+				
+				hoursSlider.on("input", function() {
+					hoursVal.text(hoursSlider.val());
+					updateInputFromSliders(minutesInput, minutesSlider, hoursSlider);
+					doOnChange(minutesInput, minutesSlider, hoursSlider);
+				})
+				minutesInput.change(function() {
+					updateSlidersFromInput(minutesInput, minutesSlider, hoursSlider, minutesVal, hoursVal);
+					doOnChange(minutesInput, minutesSlider, hoursSlider);
+				})
+			}
+			
 			
 			var settings = $.extend({
 				"debug": false,
@@ -81,39 +116,10 @@
 				var hoursSlider = $('<input id="hours_' + elName + '" type="range" min="0" max="24" value="0"/>');
 				var hoursLabel = $('<label class="control-label" for="hours_' + elName + '">' + settings.hoursLabel + '</label>');
 				var hoursVal = $('<span id="hoursVal_' + elName + '">0</span>');
+								
+				buildTheDOM(minutesInput, minutesVal, minutesSlider, minutesLabel, hoursVal, hoursSlider, hoursLabel);
 				
-				
-				
-				minutesInput.hide();
-				var widget = $("<div class='minuteSlidersWidget'></div>");
-				var minutesContainer = $("<div class='minutesContainer'></div>");
-				var hoursContainer = $("<div class='hoursContainer'></div>");
-				minutesContainer.append(minutesVal);
-				minutesContainer.append(minutesSlider);
-				minutesContainer.append(minutesLabel);
-				hoursContainer.append(hoursVal);
-				hoursContainer.append(hoursSlider);
-				hoursContainer.append(hoursLabel);
-				widget.append(minutesContainer);
-				widget.append(hoursContainer);
-				minutesInput.after(widget);
-				updateSlidersFromInput(minutesInput, minutesSlider, hoursSlider, minutesVal, hoursVal);
-				
-				minutesSlider.on("input", function() {
-					minutesVal.text(minutesSlider.val());
-					updateInputFromSliders(minutesInput, minutesSlider, hoursSlider);
-					doOnChange(minutesInput, minutesSlider, hoursSlider)
-				})
-				
-				hoursSlider.on("input", function() {
-					hoursVal.text(hoursSlider.val());
-					updateInputFromSliders(minutesInput, minutesSlider, hoursSlider);
-					doOnChange(minutesInput, minutesSlider, hoursSlider);
-				})
-				minutesInput.change(function() {
-					updateSlidersFromInput(minutesInput, minutesSlider, hoursSlider, minutesVal, hoursVal);
-					doOnChange(minutesInput, minutesSlider, hoursSlider);
-				})
+				hookEvents(minutesInput, minutesVal, minutesSlider, minutesLabel, hoursVal, hoursSlider, hoursLabel)
 			});
 		}
 
