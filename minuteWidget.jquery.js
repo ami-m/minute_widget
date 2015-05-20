@@ -62,10 +62,10 @@
 				var widget = $("<div class='"+writeClassAttr("widgetClass")+"'></div>");
 				var minutesContainer = $("<div class='"+writeClassAttr("minutesContainerClass")+"'></div>");
 				var hoursContainer = $("<div class='"+writeClassAttr("hoursContainerClass")+"'></div>");
-				minutesContainer.append(minutesVal);
+				minutesLabel.append(minutesVal);
 				minutesContainer.append(minutesSlider);
 				minutesContainer.append(minutesLabel);
-				hoursContainer.append(hoursVal);
+				hoursLabel.append(hoursVal);
 				hoursContainer.append(hoursSlider);
 				hoursContainer.append(hoursLabel);
 				widget.append(minutesContainer);
@@ -115,8 +115,8 @@
 				"minutesLabel": "minutes",
 				"labelClass": "control-label",
 				"sliderClass": "form-control",
-				"hoursValueClass": "",
-				"minutesValueClass": "",
+				"hoursValueClass": "hoursValue",
+				"minutesValueClass": "minutesValue",
 				"onChange": function (o) {
 					if(true === settings.debug) {
 						console.log(o);
